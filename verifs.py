@@ -81,12 +81,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.checkBox_verif_int.clicked.connect(self.int_checkBox)
         self.checkBox_verif_ext.clicked.connect(self.ext_checkBox)
 
-    def findNum(self, quiz, rand = True, idx_choosen = None):
-        """ Choisi d'un nombre aléatoire et vérifie
+    def findNum(self, quiz):
+        """ Choisi un nombre aléatoire et vérifie
         s'il correspond à une question existante
-        dans le/les DataFrame(s). Si c'est le cas, 
-        renvoie l'index correspondant """
+        dans le/les DataFrame(s) séléctionné(s). 
+        Si c'est le cas, renvoie l'index correspondant.
+        
+        quiz 0 = Vérifications intérieures
+        quiz 1 = Vérifications extérieures
+        quiz 2 = Vérifications intérieures ET extérieures """
 
+        # Si les deux questionnaires ont été cochés 
+        # (code quiz = 2), cette liste contiendra l'index 
+        # valable trouvé pour le 1er dataframe ainsi que 
+        # pour le 2eme  
         dblQuiz = []
 
         # Vérifiactions intérieures OU global
@@ -94,19 +102,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             found = False
             
             while found == False:
-                num = random.randint(1, 99)
+                num = random.randint(0, 99)
                 i = 0
 
                 for idx in verif_int_idx:
                     if num in idx:
                         found = True
-                        break
+                        break # Sortie de la boucle for
                     if num not in idx:
                         i+=1
                         found = False
                     if i >= len(verif_int_idx):
                         found = False
-                        break
+                        break # Sortie de la boucle for
+                        # valeur non trouvée
+                        # reprise de la boucle while
+
             if quiz == 0:
                 return i
             if quiz == 2:
@@ -117,7 +128,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             found = False
         
             while found == False:
-                num = random.randint(1, 99)
+                num = random.randint(0, 99)
                 i = 0
 
                 for idx in verif_ext_idx:
@@ -217,18 +228,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_r2.setText(r2)
 
         # Save
-        #self.df_choisi = df
         self.quiz_choisi = quiz
 
         # Affichage numéro de la question
         quest_num = eval(df.at[idx, "Numéro"])
-        if 0 in quest_num:
+        if None in quest_num:
             quest_num = "{}".format(quest_num[0])
         else:
             quest_num = "{}, {}".format(quest_num[0], quest_num[1])
 
         if self.df_choisi is verif_int:
-            #print(quest_num)
             self.label_quest_ref.setText("Vérifications intèrieures - Question {}".format(quest_num))
             self.label_quest_ref_2.setText("Vérifications intèrieures - Question {}".format(quest_num))
 
@@ -238,9 +247,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         
         if self.idx_actuel == -1 or self.idx_actuel == 0:
-            print("+1 DISPLAY 1")
+            #print("+1 DISPLAY 1")
             self.idx_actuel += 1
-            #print("ARTIFICIAL +1")
 
         # Insertion de la question dans la liste
         """ Les nouvelles questions sont ajoutées à la 
@@ -251,13 +259,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.idx_actuel == len(self.quest_posees) and rand == True:
             add = [self.df_choisi, quiz, idx]
             self.quest_posees.append(add)
-            print("+1 DISPLAY 2")
+            #print("+1 DISPLAY 2")
             self.idx_actuel += 1
-            #print("idx 4 : ", self.idx_actuel)
-        
-        #print(self.quest_posees)
-        #print("Index actuel : ", self.idx_actuel)
-        #print("Longueur de la liste : ", len(self.quest_posees))
 
     def next_button(self):
         """
@@ -293,20 +296,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         prochaine question sera une nouvelle question aléatoire qui 
         sera ajoutée à son tour la liste """
         if self.idx_actuel == len(self.quest_posees):
-            #print("NEW QUESTION")
             self.display(self.df_choisi, quiz = self.quiz_choisi)
-            #self.idx_actuel += 1
         
         else: # Question déjà posée
             """ L'index actuel est inférieur à la longueur de la 
             liste des questions posées, on affiche la question 
             suivante sur la liste (il s'agit d'une question 
             précédement posées) """
-            print("+1 NEXT")
+            #print("+1 NEXT")
             self.idx_actuel += 1
-            #print("idx 5 : ", self.idx_actuel)
-            #print("Index actuel : ", self.idx_actuel)
-            #print("Longueur de la liste : ", len(self.quest_posees))
 
             df = self.quest_posees[self.idx_actuel-1][0]
             quiz = self.quest_posees[self.idx_actuel-1][1]
@@ -314,14 +312,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             self.display(df, quiz = quiz, rand=False, idx_choosen=idx_c)
 
-        print("TAILLE LISTE : ", len(self.quest_posees))
-        print("INDEX ACTUEL : ", self.idx_actuel)
+        #print("TAILLE LISTE : ", len(self.quest_posees))
+        #print("INDEX ACTUEL : ", self.idx_actuel)
     
     def previous_button(self):
-        print("PREVIOUS")
-        """ print("TAILLE LISTE : ", len(self.quest_posees))
-        print("INDEX ACTUEL : ", self.idx_actuel) """
-        print("-1 PREV")
+        #print("-1 PREV")
         self.idx_actuel -= 1
         
         # (dés)activation des boutons
@@ -335,8 +330,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         idx_c = self.quest_posees[self.idx_actuel-1][2]
         self.display(df, quiz = quiz, rand=False, idx_choosen=idx_c)
 
-        print("TAILLE LISTE : ", len(self.quest_posees))
-        print("INDEX ACTUEL : ", self.idx_actuel)
+        #print("TAILLE LISTE : ", len(self.quest_posees))
+        #print("INDEX ACTUEL : ", self.idx_actuel)
     
     def int_checkBox(self):
         """ Comportement du checkBox Vérif. int. """
