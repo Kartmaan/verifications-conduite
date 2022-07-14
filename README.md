@@ -17,7 +17,7 @@ s'entraîner grâce à des quiz par le biai de questions posées aléatoirement.
 souhaite avoir : vérifications intérieures, extérieures ou les deux
 - Les questions et les réponses s'affichant sur deux onglets différents, afin de
 permettre à l'utilisateur de vérifier plus efficacement ses connaissances
-. L'utilisateur peut, s'il le souhaite, revenir à des questions précédentes 
+- L'utilisateur peut, s'il le souhaite, revenir à des questions précédentes 
 grâce aux boutons 'Précédent' et 'Suivant'
 
 ## Pré-requis
