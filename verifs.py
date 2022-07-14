@@ -102,14 +102,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             found = False
             
             while found == False:
-                num = random.randint(0, 99)
+                num1 = random.randint(0, 99)
                 i = 0
 
                 for idx in verif_int_idx:
-                    if num in idx:
+                    if num1 in idx:
                         found = True
                         break # Sortie de la boucle for
-                    if num not in idx:
+                    if num1 not in idx:
                         i+=1
                         found = False
                     if i >= len(verif_int_idx):
@@ -128,14 +128,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             found = False
         
             while found == False:
-                num = random.randint(0, 99)
+                num2 = random.randint(0, 99)
                 i = 0
 
                 for idx in verif_ext_idx:
-                    if num in idx:
+                    if num2 in idx:
                         found = True
                         break
-                    if num not in idx:
+                    if num2 not in idx:
                         i+=1
                         found = False
                     if i >= len(verif_ext_idx):
