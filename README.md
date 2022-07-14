@@ -20,6 +20,8 @@ permettre à l'utilisateur de vérifier plus efficacement ses connaissances
 - L'utilisateur peut, s'il le souhaite, revenir à des questions précédentes 
 grâce aux boutons 'Précédent' et 'Suivant'
 
+## Screenshots
+
 ## Pré-requis
 - pandas
 - PyQt5
