@@ -8,7 +8,7 @@ axes :
 
 Les deux derniers chiffres du kilometrage, affichées sur le tableau de bord du 
 véhicule, determineront la question à poser. Ces questions ne sont pas 
-éliminatoires mais apportent chacune 1 point au résultat final.
+éliminatoires mais apportent chacune 1 point au résultat final, soit 3 au total.
 
 ## Le programme
 La liste officielle des questions étant connue, ce programme permet de 
